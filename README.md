@@ -5,13 +5,12 @@ macOS.
 
 ```bash
 brew install --cask hazematic/tap/pegel
-xattr -dr com.apple.quarantine /Applications/Pegel.app
 ```
 
-The second line is needed because the app is not notarised by Apple. Homebrew no
-longer sets the quarantine flag itself, but the downloaded archive already carries
-it and the unpacked app inherits it, so Gatekeeper refuses the first launch. There
-used to be a `--no-quarantine` option for this; it was removed from Homebrew.
+That is the whole installation. Pegel is not notarised by Apple, so the downloaded
+archive carries macOS' quarantine flag and Gatekeeper would refuse the first launch;
+the cask clears that flag in a `postflight` block. Homebrew used to have a
+`--no-quarantine` option for this, but it was removed.
 
 ## Releasing a new version
 
