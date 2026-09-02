@@ -4,11 +4,14 @@ Homebrew tap for [Pegel](https://github.com/hazematic/pegel), local dictation fo
 macOS.
 
 ```bash
-brew install --cask --no-quarantine hazematic/tap/pegel
+brew install --cask hazematic/tap/pegel
+xattr -dr com.apple.quarantine /Applications/Pegel.app
 ```
 
-`--no-quarantine` is needed because the app is not notarised by Apple. Without it
-macOS refuses the first launch and you have to clear the flag by hand.
+The second line is needed because the app is not notarised by Apple. Homebrew no
+longer sets the quarantine flag itself, but the downloaded archive already carries
+it and the unpacked app inherits it, so Gatekeeper refuses the first launch. There
+used to be a `--no-quarantine` option for this; it was removed from Homebrew.
 
 ## Releasing a new version
 

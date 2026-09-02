@@ -18,12 +18,8 @@ cask "pegel" do
   app "Pegel.app"
 
   caveats <<~EOS
-    Pegel is not notarised by Apple. Install it with --no-quarantine, otherwise
-    macOS refuses the first launch:
-
-      brew install --cask --no-quarantine hazematic/tap/pegel
-
-    If you already installed it without that flag:
+    Pegel is not notarised by Apple. The download carries the quarantine flag,
+    so macOS refuses the first launch. Clear it once:
 
       xattr -dr com.apple.quarantine /Applications/Pegel.app
 
