@@ -40,7 +40,14 @@ cask "pegel" do
     Microphone, Accessibility and Input Monitoring permissions.
   EOS
 
+  # Der dicke Brocken ist der Core-ML-Cache: macOS kompiliert das Modell beim ersten
+  # Lauf für die Neural Engine und legt dafür rund 1,2 GB unter Caches ab, also mehr
+  # als das Modell selbst. Ohne diesen Eintrag bliebe das nach dem Deinstallieren
+  # liegen. Vom FluidAudio-Ordner nur das eigene Modell: silero-vad und alles andere
+  # dort kann anderen Programmen gehören.
   zap trash: [
+    "~/Library/Caches/io.github.hazematic.pegel",
+    "~/Library/HTTPStorages/io.github.hazematic.pegel",
     "~/Library/Preferences/io.github.hazematic.pegel.plist",
     "~/Library/Application Support/FluidAudio/Models/parakeet-tdt-0.6b-v3",
   ]
