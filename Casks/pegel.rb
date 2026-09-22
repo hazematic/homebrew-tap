@@ -32,7 +32,7 @@ cask "pegel" do
     Pegel is not notarised by Apple, so the download carries macOS' quarantine
     flag and Gatekeeper would refuse the first launch. This cask clears that flag
     after installing, which is why no extra step is needed. If you would rather do
-    it yourself, remove the postflight block from the cask and run
+    it yourself, remove the postflight_steps block from the cask and run
 
       xattr -dr com.apple.quarantine /Applications/Pegel.app
 
