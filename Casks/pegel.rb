@@ -1,6 +1,6 @@
 cask "pegel" do
-  version "1.0.0"
-  sha256 "0c0713d1d57a1f14634e1ed835673249bf2dfc73711d6aa54c6d268ed39f8710"
+  version "1.0.1"
+  sha256 "4d1913cb60cffcfefc22ac734faa012e6dabd094de10bdcd3d1c1e65534b50bc"
 
   url "https://github.com/hazematic/pegel/releases/download/v#{version}/Pegel-#{version}.zip"
   name "Pegel"
@@ -22,10 +22,10 @@ cask "pegel" do
 
   # Not notarised: clear the quarantine flag the archive passes on to the app.
   # Acceptable in a tap the user adds deliberately, not in homebrew-cask.
-  postflight do
-    system_command "/usr/bin/xattr",
-                   args:         ["-dr", "com.apple.quarantine", "#{appdir}/Pegel.app"],
-                   must_succeed: false
+  postflight_steps do
+    run "/usr/bin/xattr",
+        args:         ["-dr", "com.apple.quarantine", "{{appdir}}/Pegel.app"],
+        must_succeed: false
   end
 
   caveats <<~EOS
