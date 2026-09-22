@@ -1,14 +1,11 @@
 #!/bin/bash
-# Setzt Version und Prüfsumme im Cask aus einem gebauten Release-ZIP.
+# Sets version and checksum in the cask from a release ZIP.
 #
 #   ./update-cask.sh ../pegel/build/Pegel-0.1.0.zip
-#
-# Die Version wird aus dem Dateinamen gelesen. Danach committen und pushen, mehr
-# braucht ein Release im Tap nicht.
 set -euo pipefail
 
-ZIP="${1:?Pfad zum Release-ZIP fehlt}"
-[ -f "$ZIP" ] || { echo "Nicht gefunden: $ZIP" >&2; exit 1; }
+ZIP="${1:?path to release ZIP missing}"
+[ -f "$ZIP" ] || { echo "Not found: $ZIP" >&2; exit 1; }
 
 BASENAME="$(basename "$ZIP")"
 VERSION="${BASENAME#Pegel-}"
@@ -21,5 +18,5 @@ cd "$(dirname "$0")"
     -e "s/^  sha256 \".*\"$/  sha256 \"$SHA\"/" \
     Casks/pegel.rb
 
-echo "Cask auf $VERSION gesetzt"
+echo "Cask set to $VERSION"
 echo "  sha256 $SHA"

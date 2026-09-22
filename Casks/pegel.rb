@@ -12,16 +12,16 @@ cask "pegel" do
     strategy :github_latest
   end
 
+  # No auto_updates: Sparkle checks are off by default, and with it brew upgrade
+  # would skip the app.
+
   depends_on macos: :sonoma
   depends_on arch: :arm64
 
   app "Pegel.app"
 
-  # Pegel ist nicht notarisiert, und das heruntergeladene Archiv bringt das
-  # Quarantäne-Merkmal mit, das die entpackte App erbt. Ohne diesen Schritt
-  # verweigert Gatekeeper den ersten Start. Bewusst hier und nicht als Hausaufgabe
-  # für den Nutzer: wer dieses Tap hinzufügt, hat die Entscheidung schon getroffen.
-  # In homebrew-cask selbst wäre das nicht erwünscht.
+  # Not notarised: clear the quarantine flag the archive passes on to the app.
+  # Acceptable in a tap the user adds deliberately, not in homebrew-cask.
   postflight do
     system_command "/usr/bin/xattr",
                    args:         ["-dr", "com.apple.quarantine", "#{appdir}/Pegel.app"],
@@ -40,11 +40,8 @@ cask "pegel" do
     Microphone, Accessibility and Input Monitoring permissions.
   EOS
 
-  # Der dicke Brocken ist der Core-ML-Cache: macOS kompiliert das Modell beim ersten
-  # Lauf für die Neural Engine und legt dafür rund 1,2 GB unter Caches ab, also mehr
-  # als das Modell selbst. Ohne diesen Eintrag bliebe das nach dem Deinstallieren
-  # liegen. Vom FluidAudio-Ordner nur das eigene Modell: silero-vad und alles andere
-  # dort kann anderen Programmen gehören.
+  # The Core ML cache (~1.2 GB) outlives the app otherwise. Only Pegel's own model
+  # from the FluidAudio folder; the rest may belong to other apps.
   zap trash: [
     "~/Library/Caches/io.github.hazematic.pegel",
     "~/Library/HTTPStorages/io.github.hazematic.pegel",
