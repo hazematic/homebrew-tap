@@ -1,6 +1,6 @@
 cask "pegel" do
-  version "1.4.0"
-  sha256 "8f17aeb909866ccd6c06e0cf704707cdd860eaa82ae916d0708d28179e834802"
+  version "1.5.0"
+  sha256 "27293fb6811299db0afbd8a0e66dd9f5a0607d596aaeea5bfab980b0de2ac0ab"
 
   url "https://github.com/hazematic/pegel/releases/download/v#{version}/Pegel-#{version}.zip"
   name "Pegel"
